@@ -1,6 +1,8 @@
-Debug/
-x64/
-Theodora/Debug/
-Theodora/x64/
-Theodora/data/
-.vs/
+vs19/Debug/
+vs19/x64/
+vs19/Theodora/Debug/
+vs19/Theodora/x64/
+vs19/Theodora/data/
+vs19/.vs/
+obj/
+bin/
