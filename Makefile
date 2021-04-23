@@ -37,7 +37,7 @@ ALL_CPPFLAGS	:= $(CPPFLAGS)
 
 # Linker Flags
 ALL_LDFLAGS		:= $(LDFLAGS)
-ALL_LDLIBS		:= -lc -lglfw3 -lGL -lGLEW -lX11 -lpthread -lXrandr -lXi -ldl -lSDL2 -lSDL2main -lSDL2_mixer -lutil -lm
+ALL_LDLIBS		:= -lc -lglfw3 -lGL -lGLEW -lX11 -lpthread -lXrandr -lXi -ldl -lIL -lSDL2 -lSDL2main -lSDL2_mixer -lutil -lm
 
 
 # Source, Binaries, Dependencies

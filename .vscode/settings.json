@@ -7,6 +7,15 @@
         "unordered_map": "c",
         "vector": "c",
         "string_view": "c",
-        "initializer_list": "c"
+        "initializer_list": "c",
+        "imconfig.h": "c",
+        "imgui_impl_opengl3.h": "c",
+        "cimgui.h": "c",
+        "*.tcc": "c",
+        "fstream": "c",
+        "istream": "c",
+        "numeric": "c",
+        "ostream": "c",
+        "sstream": "c"
     }
 }
