@@ -1,7 +1,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <IL/il.h>
 #include <SDL.h>
 #include <SDL_mixer.h>
+
+#include <stdio.h>
 
 #include "util.h"
 
@@ -47,6 +50,8 @@ int main(int argc, char** argv)
         fprintf(stderr, "Failed to initialize GLEW. Error: %s\n", glewGetErrorString(glewError));
         goto end;
     }
+
+    // DEVIL STUFF
 
     flags = SDL_INIT_AUDIO;
     error = SDL_Init(flags);
