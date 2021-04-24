@@ -8,35 +8,41 @@
 #ifndef INIT_H
 #define INIT_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "structs.h"
 
 /*
- * Function: init
- * --------------
+ * init
+ *
  * Initializes Theodora with several libraries including:
  *  - GLFW
  *  - GLEW
  *  - DevIL
+ *  - Nuklear
  *  - SDL
  *  - SDL_mixer
  * 
- * GLFWwindow** window: The window to be initialized.
+ * TheodoraContext* tc: The context to be initialized.
  * 
  * Returns: 0 for success, non-zero for error 
  *          (details are printed to stderr).
 */
-int init(GLFWwindow** window);
+int init(TheodoraContext* tc);
 
 /*
- * Function: quit
- * --------------
+ * quit
+ *
  * Terminates all libraries and cleans up other various things.
  * 
- * GLFWwindow* window: The window to be destroyed.
+ * TheodoraContext* tc: The context to be terminated.
  * 
  * Returns: void
 */
-void quit(GLFWwindow* window);
+void quit(TheodoraContext* tc);
 
 #endif
+
+
+//Changelog:
+//23-04-2021 - Added TheodoraContext compatibility, changed the comment format,
+//             added this changelog.
+//22-04-2021 - Initial version.

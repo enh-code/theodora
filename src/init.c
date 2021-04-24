@@ -7,15 +7,22 @@
 //*******************************************************//
 #include "init.h"
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <IL/il.h>
 #include <SDL.h>
 #include <SDL_mixer.h>
 
 #include <stdio.h>
 
-#include "constants.h"
+#include "nk.h"
 
-int init(GLFWwindow** window)
+#include "macros.h"
+
+
+static void set_dark_style(struct nk_context *ctx);
+
+int init(TheodoraContext* tc)
 {
     //----------DECLARATION----------//
 
@@ -29,7 +36,6 @@ int init(GLFWwindow** window)
     GLenum glewError = 0;
     //DevIL error
     ILenum ilError = 0;
-
 
 
     //----------INITIALIZATION----------//
@@ -49,16 +55,20 @@ int init(GLFWwindow** window)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+#endif
+
     //Create window
-    *window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Theodora", NULL, NULL);
-    if(*window == NULL)
+    tc->window = glfwCreateWindow(THEO_WINDOW_WIDTH, THEO_WINDOW_HEIGHT, "Theodora", NULL, NULL);
+    if(tc->window == NULL)
     {
         error = glfwGetError(errorMsg);
         fprintf(stderr, "Window creation failed. Error: %s\n", *errorMsg);
         return error;
     }
 
-    glfwMakeContextCurrent(*window);
+    glfwMakeContextCurrent(tc->window);
 
     //TODO(Evan): Set callbacks here
 
@@ -67,11 +77,11 @@ int init(GLFWwindow** window)
     glewError = glewInit();
     if(glewError != GLEW_OK)
     {
-        error = glewError;
+        error = (int) glewError;
         fprintf(stderr, "Failed to initialize GLEW. Error: %s\n", glewGetErrorString(glewError));
         return error;
     }
-
+    glViewport(0, 0, THEO_WINDOW_WIDTH, THEO_WINDOW_HEIGHT);
 
     //DevIL (image processing)
     ilInit();
@@ -85,6 +95,17 @@ int init(GLFWwindow** window)
         return error;
     }
 
+    //Nuklear
+    tc->ctx = nk_glfw3_init(&tc->glfwctx, tc->window, NK_GLFW3_INSTALL_CALLBACKS);
+    
+    //May not be necessary
+    {
+        struct nk_font_atlas* atlas;
+        nk_glfw3_font_stash_begin(&tc->glfwctx, &atlas);
+        nk_glfw3_font_stash_end(&tc->glfwctx);
+    }
+    
+    set_dark_style(tc->ctx);
 
     //SDL (audio only)
     flags = SDL_INIT_AUDIO;
@@ -110,12 +131,54 @@ int init(GLFWwindow** window)
     return 0;
 }
 
-void quit(GLFWwindow* window)
+void quit(TheodoraContext* tc)
 {
     //----------CLEANUP----------//
-    glfwDestroyWindow(window);
+    glfwDestroyWindow(tc->window);
+
+    nk_glfw3_shutdown(&tc->glfwctx);
 
     Mix_Quit();
     SDL_Quit();
+
     glfwTerminate();
 }
+
+static void set_dark_style(struct nk_context *ctx)
+{
+    struct nk_color table[NK_COLOR_COUNT];
+    table[NK_COLOR_TEXT] = nk_rgba(210, 210, 210, 255);
+    table[NK_COLOR_WINDOW] = nk_rgba(57, 67, 71, 215);
+    table[NK_COLOR_HEADER] = nk_rgba(51, 51, 56, 220);
+    table[NK_COLOR_BORDER] = nk_rgba(46, 46, 46, 255);
+    table[NK_COLOR_BUTTON] = nk_rgba(48, 83, 111, 255);
+    table[NK_COLOR_BUTTON_HOVER] = nk_rgba(58, 93, 121, 255);
+    table[NK_COLOR_BUTTON_ACTIVE] = nk_rgba(63, 98, 126, 255);
+    table[NK_COLOR_TOGGLE] = nk_rgba(50, 58, 61, 255);
+    table[NK_COLOR_TOGGLE_HOVER] = nk_rgba(45, 53, 56, 255);
+    table[NK_COLOR_TOGGLE_CURSOR] = nk_rgba(48, 83, 111, 255);
+    table[NK_COLOR_SELECT] = nk_rgba(57, 67, 61, 255);
+    table[NK_COLOR_SELECT_ACTIVE] = nk_rgba(48, 83, 111, 255);
+    table[NK_COLOR_SLIDER] = nk_rgba(50, 58, 61, 255);
+    table[NK_COLOR_SLIDER_CURSOR] = nk_rgba(48, 83, 111, 245);
+    table[NK_COLOR_SLIDER_CURSOR_HOVER] = nk_rgba(53, 88, 116, 255);
+    table[NK_COLOR_SLIDER_CURSOR_ACTIVE] = nk_rgba(58, 93, 121, 255);
+    table[NK_COLOR_PROPERTY] = nk_rgba(50, 58, 61, 255);
+    table[NK_COLOR_EDIT] = nk_rgba(50, 58, 61, 225);
+    table[NK_COLOR_EDIT_CURSOR] = nk_rgba(210, 210, 210, 255);
+    table[NK_COLOR_COMBO] = nk_rgba(50, 58, 61, 255);
+    table[NK_COLOR_CHART] = nk_rgba(50, 58, 61, 255);
+    table[NK_COLOR_CHART_COLOR] = nk_rgba(48, 83, 111, 255);
+    table[NK_COLOR_CHART_COLOR_HIGHLIGHT] = nk_rgba(255, 0, 0, 255);
+    table[NK_COLOR_SCROLLBAR] = nk_rgba(50, 58, 61, 255);
+    table[NK_COLOR_SCROLLBAR_CURSOR] = nk_rgba(48, 83, 111, 255);
+    table[NK_COLOR_SCROLLBAR_CURSOR_HOVER] = nk_rgba(53, 88, 116, 255);
+    table[NK_COLOR_SCROLLBAR_CURSOR_ACTIVE] = nk_rgba(58, 93, 121, 255);
+    table[NK_COLOR_TAB_HEADER] = nk_rgba(48, 83, 111, 255);
+    nk_style_from_table(ctx, table);
+}
+
+//Changelog:
+//23-04-2021 - Added set_dark_style (sort of "borrowed" from Nuklear "demo/style.c"),
+//             added Nuklear integration.
+//22-04-2021 - Initial version.

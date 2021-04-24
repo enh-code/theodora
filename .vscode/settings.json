@@ -16,6 +16,12 @@
         "istream": "c",
         "numeric": "c",
         "ostream": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "nuklear_glfw_gl3.h": "c",
+        "nuklear.h": "c",
+        "constants.h": "c",
+        "glfw3.h": "c",
+        "sdl_mixer.h": "c",
+        "style.h": "c"
     }
 }

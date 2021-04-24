@@ -4,7 +4,7 @@ LD			= gcc
 RM			= rm -rf
 RMDIR		= rmdir
 INSTALL		= install
-DEBUG		= -ggdb -O0 -march=native -ftrapv
+DEBUG		= -std=c99 -ggdb -O0 -march=native -ftrapv
 
 ## CHANGE THIS ##
 TARGET		= theodora
@@ -24,13 +24,14 @@ TARGET_ARCH :=
 # Compiler Flags
 ALL_CFLAGS		:= $(CFLAGS)
 ALL_CFLAGS      += -I./include -I/usr/local/include/SDL2
-ALL_CFLAGS		+= -Wall -Wextra -pedantic
-ALL_CFLAGS		+= -fno-strict-aliasing
-ALL_CFLAGS		+= -Wuninitialized -Winit-self -Wfloat-equal
-ALL_CFLAGS		+= -Wundef -Wshadow -Wcast-qual -Wcast-align
-ALL_CFLAGS		+= -Wconversion -Wsign-conversion -Wjump-misses-init
-ALL_CFLAGS		+= -Wno-multichar -Wpacked -Wstrict-overflow -Wvla
-ALL_CFLAGS		+= -Wformat -Wno-format-zero-length -Wstrict-prototypes
+#ALL_CFLAGS		+= -Wall -Wextra -pedantic
+#ALL_CFLAGS		+= -fno-strict-aliasing
+#ALL_CFLAGS		+= -Wuninitialized -Winit-self -Wfloat-equal
+#ALL_CFLAGS		+= -Wundef -Wshadow -Wcast-qual -Wcast-align
+#ALL_CFLAGS		+= -Wconversion -Wsign-conversion -Wjump-misses-init
+#ALL_CFLAGS		+= -Wno-multichar -Wpacked -Wstrict-overflow -Wvla
+#ALL_CFLAGS		+= -Wformat -Wno-format-zero-length -Wstrict-prototypes
+#WAY TOO MANY WARNINGS GENERATED FROM NUKLEAR FOR NOW
 
 # Preprocessor Flags
 ALL_CPPFLAGS	:= $(CPPFLAGS)
@@ -49,7 +50,7 @@ BIN			:= $(BINDIR)/$(TARGET)
 
 
 # Verbosity Control, ala automake
-V 			= 0
+V 			= 1
 
 # Verbosity for CC
 REAL_CC 	:= $(CC)
