@@ -6,14 +6,11 @@ RMDIR		= rmdir
 INSTALL		= install
 DEBUG		= -std=c99 -ggdb -O0 -march=native -ftrapv
 
-## CHANGE THIS ##
 TARGET		= theodora
 SRCDIR		= src
 OBJDIR		= obj
 BINDIR		= bin
-## CHANGE THIS ##
 
-# CFLAGS, LDFLAGS, CPPFLAGS, PREFIX can be overriden on CLI
 CFLAGS		:= $(DEBUG)
 CPPFLAGS	:=
 LDFLAGS		:= -L./lib -L/usr/local/lib -L/usr/lib
@@ -23,7 +20,7 @@ TARGET_ARCH :=
 
 # Compiler Flags
 ALL_CFLAGS		:= $(CFLAGS)
-ALL_CFLAGS      += -I./include -I/usr/local/include/SDL2
+ALL_CFLAGS      += -I./include
 #ALL_CFLAGS		+= -Wall -Wextra -pedantic
 #ALL_CFLAGS		+= -fno-strict-aliasing
 #ALL_CFLAGS		+= -Wuninitialized -Winit-self -Wfloat-equal
@@ -38,7 +35,7 @@ ALL_CPPFLAGS	:= $(CPPFLAGS)
 
 # Linker Flags
 ALL_LDFLAGS		:= $(LDFLAGS)
-ALL_LDLIBS		:= -lc -lglfw3 -lGL -lGLEW -lX11 -lpthread -lXrandr -lXi -ldl -lIL -lSDL2 -lSDL2main -lSDL2_mixer -lutil -lm
+ALL_LDLIBS		:= -lc -lglfw3 -lGL -lGLEW -lX11 -lpthread -lXrandr -lXi -ldl -lIL -lm
 
 
 # Source, Binaries, Dependencies

@@ -1,28 +1,26 @@
 //*******************************************************//
 // 
-// File: init.c - Initialization source for libraries.
+// File: TD_init.c - Initialization source for libraries.
 // Author: Evan Hess
 // Date: 22 April 2021
 // 
 //*******************************************************//
-#include "init.h"
+#include "TD_init.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <IL/il.h>
-#include <SDL.h>
-#include <SDL_mixer.h>
 
 #include <stdio.h>
 
-#include "nk.h"
+#include "TD_nk.h"
+#include "TD_macros.h"
 
-#include "macros.h"
+
+static void nk_set_dark_style(struct nk_context *ctx);
 
 
-static void set_dark_style(struct nk_context *ctx);
-
-int init(TheodoraContext* tc)
+int TD_Init(TheodoraContext* tc)
 {
     //----------DECLARATION----------//
 
@@ -30,8 +28,6 @@ int init(TheodoraContext* tc)
     const char** errorMsg = NULL;
     //General program error
     int error = 0;
-    //SDL flags
-    Uint32 flags = 0;
     //GLEW error
     GLenum glewError = 0;
     //DevIL error
@@ -60,7 +56,7 @@ int init(TheodoraContext* tc)
 #endif
 
     //Create window
-    tc->window = glfwCreateWindow(THEO_WINDOW_WIDTH, THEO_WINDOW_HEIGHT, "Theodora", NULL, NULL);
+    tc->window = glfwCreateWindow(TD_WINDOW_WIDTH, TD_WINDOW_HEIGHT, "Theodora", NULL, NULL);
     if(tc->window == NULL)
     {
         error = glfwGetError(errorMsg);
@@ -81,7 +77,7 @@ int init(TheodoraContext* tc)
         fprintf(stderr, "Failed to initialize GLEW. Error: %s\n", glewGetErrorString(glewError));
         return error;
     }
-    glViewport(0, 0, THEO_WINDOW_WIDTH, THEO_WINDOW_HEIGHT);
+    glViewport(0, 0, TD_WINDOW_WIDTH, TD_WINDOW_HEIGHT);
 
     //DevIL (image processing)
     ilInit();
@@ -105,46 +101,23 @@ int init(TheodoraContext* tc)
         nk_glfw3_font_stash_end(&tc->glfwctx);
     }
     
-    set_dark_style(tc->ctx);
-
-    //SDL (audio only)
-    flags = SDL_INIT_AUDIO;
-    
-    error = SDL_Init(flags);
-    if(error != 0)
-    {
-        fprintf(stderr, "Failed to initialize SDL. Error: %s\n", SDL_GetError());
-        return error;
-    }
-
-
-    //SDL_mixer (increased functionality)
-    flags = MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MID; //Subject to change (except MP3)
-    
-    error = Mix_Init((int)flags);
-    if(error != (int)flags)
-    {
-        fprintf(stderr, "Failed to initialize SDL_mixer. Error: %s\n", Mix_GetError());
-        return error;
-    }
+    nk_set_dark_style(tc->ctx);
 
     return 0;
 }
 
-void quit(TheodoraContext* tc)
+void TD_Quit(TheodoraContext* tc)
 {
     //----------CLEANUP----------//
     glfwDestroyWindow(tc->window);
 
     nk_glfw3_shutdown(&tc->glfwctx);
 
-    Mix_Quit();
-    SDL_Quit();
-
     glfwTerminate();
 }
 
-static void set_dark_style(struct nk_context *ctx)
+//Helper method, sets Nuklear style to dark
+static void nk_set_dark_style(struct nk_context *ctx)
 {
     struct nk_color table[NK_COLOR_COUNT];
     table[NK_COLOR_TEXT] = nk_rgba(210, 210, 210, 255);
@@ -178,7 +151,11 @@ static void set_dark_style(struct nk_context *ctx)
     nk_style_from_table(ctx, table);
 }
 
+
 //Changelog:
+//25-04-2021 - set_dark_style changed to nk_set_dark_style to distinguish its 
+//             purpose, added TD_ namespace to all functions, changed all filenames,
+//             removed SDL requirements.
 //23-04-2021 - Added set_dark_style (sort of "borrowed" from Nuklear "demo/style.c"),
 //             added Nuklear integration.
 //22-04-2021 - Initial version.

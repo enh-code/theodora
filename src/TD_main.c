@@ -1,6 +1,6 @@
 //*******************************************************//
 //
-// File: main.c - Overall driver program of Theodora.
+// File: TD_main.c - Overall driver program of Theodora.
 // Author: Evan Hess
 // Date: 22 April 2021
 //
@@ -8,24 +8,20 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <SDL.h>
-#include <SDL_mixer.h>
 
 #include <stdio.h>
 
 #define NK_IMPLEMENTATION
 #define NK_GLFW_GL3_IMPLEMENTATION
-#include "macros.h"
-#include "structs.h"
-#include "init.h"
+#include "TD_macros.h"
+#include "TD_structs.h"
+#include "TD_init.h"
 
 
 TheodoraContext theodora;
 
-int main(void)
+int testFunc(void)
 {
-    init(&theodora);
-
     while(!glfwWindowShouldClose(theodora.window))
     {
         glfwPollEvents();
@@ -41,7 +37,7 @@ int main(void)
             nk_layout_row_static(theodora.ctx, 30, 80, 1);
             if(nk_button_label(theodora.ctx, "button"))
             {
-                printf("button preesed\n");
+                printf("button pressed\n");
             }
 
             nk_layout_row_dynamic(theodora.ctx, 30, 2);
@@ -62,14 +58,23 @@ int main(void)
         glClearColor(0x80, 0x00, 0x80, 0xFF);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        nk_glfw3_render(&theodora.glfwctx, NK_ANTI_ALIASING_OFF, THEO_MAX_VERTEX_BUFFER, THEO_MAX_ELEMENT_BUFFER);
+        nk_glfw3_render(&theodora.glfwctx, NK_ANTI_ALIASING_OFF, TD_MAX_VERTEX_BUFFER, TD_MAX_ELEMENT_BUFFER);
         glfwSwapBuffers(theodora.window);
     }
-
-    quit(&theodora);
 }
 
+int main(void)
+{
+    TD_Init(&theodora);
+
+    testFunc();
+
+    TD_Quit(&theodora);
+}
+
+
 //Changelog:
+//25-04-2021 - Changed all filenames, refactored test functionality.
 //23-04-2021 - Added demo code ("borrowed" from Nuklear/demo) to ensure 
 //             builds were successful.
 //22-04-2021 - Initial version.

@@ -1,10 +1,11 @@
 //*******************************************************//
 // 
-// File: nk.h - A helper header for Nuklear.
+// File: TD_nk.h - A helper header for Nuklear.
 // Author: Evan Hess
 // Date: 23 April 2021
 // 
 //*******************************************************//
+
 #ifndef NK_NUKLEAR_H_
     #define NK_INCLUDE_FIXED_TYPES
     #define NK_INCLUDE_STANDARD_IO
@@ -21,5 +22,7 @@
     #include "nuklear/nuklear_glfw_gl3.h"
 #endif
 
+
 //Changelog
+//25-04-2021 - Changed all filenames.
 //23-04-2021 - Initial version.

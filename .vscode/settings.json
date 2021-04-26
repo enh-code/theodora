@@ -22,6 +22,7 @@
         "constants.h": "c",
         "glfw3.h": "c",
         "sdl_mixer.h": "c",
-        "style.h": "c"
+        "style.h": "c",
+        "macros.h": "c"
     }
 }
