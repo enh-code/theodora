@@ -111,6 +111,8 @@ void TD_Quit(TheodoraContext* tc)
     //----------CLEANUP----------//
     glfwDestroyWindow(tc->window);
 
+    ilShutDown();
+
     nk_glfw3_shutdown(&tc->glfwctx);
 
     glfwTerminate();
@@ -155,7 +157,7 @@ static void nk_set_dark_style(struct nk_context *ctx)
 //Changelog:
 //25-04-2021 - set_dark_style changed to nk_set_dark_style to distinguish its 
 //             purpose, added TD_ namespace to all functions, changed all filenames,
-//             removed SDL requirements.
+//             removed SDL requirements, added shutdown foir DevIL.
 //23-04-2021 - Added set_dark_style (sort of "borrowed" from Nuklear "demo/style.c"),
 //             added Nuklear integration.
 //22-04-2021 - Initial version.
