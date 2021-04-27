@@ -6,8 +6,8 @@
 //
 //*******************************************************//
 
-#ifndef INIT_H
-#define INIT_H
+#ifndef TD_INIT_H
+#define TD_INIT_H
 
 #include "TD_structs.h"
 

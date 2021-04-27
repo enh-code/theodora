@@ -6,9 +6,16 @@
 //
 //*******************************************************//
 
-#ifndef ENUMS_H
-#define ENUMS_H
+#ifndef TD_ENUMS_H
+#define TD_ENUMS_H
 
+/*
+ * TD_State
+ * Holds the various program states.
+ * 
+ * EDIT: Currently in editing mode.
+ * PLAY: Currently in play mode, editing disabled.
+*/
 enum TD_State
 {
     EDIT,

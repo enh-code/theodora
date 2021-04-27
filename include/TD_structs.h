@@ -6,8 +6,8 @@
 // 
 //*******************************************************//
 
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef TD_STRUCTS_H
+#define TD_STRUCTS_H
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
