@@ -19,7 +19,7 @@
  *
  * Holds general information about the current Theodora context.
  * 
- * struct nk_glfw glfwctx: Something with a Nuklear ackend.
+ * struct nk_glfw glfwctx: Something with a Nuklear backend.
  * struct nk_context* ctx: The main context for Nuklear.
  * GLFWwindow* window: The main window for Theodora.
 */
@@ -30,7 +30,6 @@ struct TD_TheodoraContext
 
     GLFWwindow* window;
 };
-
 //For convenience: 
 typedef struct TD_TheodoraContext TD_TheodoraContext;
 typedef struct TD_TheodoraContext TheodoraContext;

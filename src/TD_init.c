@@ -12,9 +12,11 @@
 #include <IL/il.h>
 
 #include <stdio.h>
+#include <string.h>
 
 #include "TD_nk.h"
 #include "TD_macros.h"
+#include "TD_ECS.h"
 
 
 static void nk_set_dark_style(struct nk_context *ctx);
@@ -103,6 +105,9 @@ int TD_Init(TheodoraContext* tc)
     
     nk_set_dark_style(tc->ctx);
 
+    //ECS
+    memset(entityManager.available, TD_TRUE, MAX_ENTITIES);
+
     return 0;
 }
 
@@ -155,6 +160,7 @@ static void nk_set_dark_style(struct nk_context *ctx)
 
 
 //Changelog:
+//28-04-2021 - Added ECS initialization.
 //25-04-2021 - set_dark_style changed to nk_set_dark_style to distinguish its 
 //             purpose, added TD_ namespace to all functions, changed all filenames,
 //             removed SDL requirements, added shutdown foir DevIL.

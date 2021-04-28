@@ -13,8 +13,8 @@
  * TD_State
  * Holds the various program states.
  * 
- * EDIT: Currently in editing mode.
- * PLAY: Currently in play mode, editing disabled.
+ * EDIT - Currently in editing mode.
+ * PLAY - Currently in play mode, editing disabled.
 */
 enum TD_State
 {

@@ -13,7 +13,6 @@
 
 /*
  * TD_Init
- *
  * Initializes Theodora with several libraries including:
  *  - GLFW
  *  - GLEW
@@ -29,7 +28,6 @@ int TD_Init(TheodoraContext* tc);
 
 /*
  * TD_Quit
- *
  * Terminates all libraries and cleans up other various things.
  * 
  * TheodoraContext* tc: The context to be terminated.

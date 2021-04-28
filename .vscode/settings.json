@@ -23,6 +23,7 @@
         "glfw3.h": "c",
         "sdl_mixer.h": "c",
         "style.h": "c",
-        "macros.h": "c"
+        "macros.h": "c",
+        "algorithm": "c"
     }
 }

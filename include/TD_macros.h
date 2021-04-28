@@ -7,9 +7,9 @@
 //*******************************************************//
 
 //Simple C boolean
-#define BOOL char
-#define TRUE 1
-#define FALSE 0
+#define TD_BOOL char
+#define TD_TRUE 1
+#define TD_FALSE 0
 
 //"Borrowed" from Nuklear demos
 #define TD_MAX_VERTEX_BUFFER 512 * 1024
@@ -21,8 +21,10 @@
 
 //ECS Specifications
 #define MAX_ENTITIES 1024
+#define MAX_SCRIPTS 5
 
 //Changelog
+//28-04-2021 - Added TD_ again, added MAX_SCRIPTS
 //26-04-2021 - Added BOOL macro, added MAX_ENTITIES, removed include guards.
 //25-04-2021 - Changed "THEO_" to "TD_" for consistency, changed all filenames.
 //23-04-2021 - Renamed "constants.h" to "macros.h", swapped constants for
