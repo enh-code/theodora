@@ -12,6 +12,7 @@
 #include <stdlib.h>
 
 #include "TD_macros.h"
+#include "TD_types.h"
 
 //----------ENTITY----------//
 
@@ -19,14 +20,14 @@
  * TD_Entity
  * An unique ID for up to 2^64 entities.
 */
-typedef __uint64_t TD_Entity;
+typedef TD_uint64 TD_Entity;
 
 /*
  * TD_Signature
  * A bitfield that holds up to 64 components that will be 
  * held by entities.
 */
-typedef __uint64_t TD_Signature;
+typedef TD_uint64 TD_Signature;
 
 /*
  * EntityManager
@@ -215,6 +216,7 @@ int TD_AddScript(TD_Entity e, Script s);
 
 
 //Changlog:
+//05-02-2021 - Added "TD_uint64" type where applicable.
 //28-04-2021 - Collected ECS files into this file, added all of
 //             the functionality.
 //26-04-2021 - Initial version.
