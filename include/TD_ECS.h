@@ -13,6 +13,8 @@
 
 #include "TD_macros.h"
 #include "TD_types.h"
+#include "TD_structs.h"
+#include "TD_vectors.h"
 
 //----------ENTITY----------//
 
@@ -41,9 +43,9 @@ typedef TD_uint64 TD_Signature;
 */
 struct TD_EntityManager
 {
-    TD_Signature signatures[MAX_ENTITIES];
-    char* names[MAX_ENTITIES];
-    TD_BOOL available[MAX_ENTITIES];
+    TD_Signature signatures[TD_MAX_ENTITIES];
+    char* names[TD_MAX_ENTITIES];
+    TD_BOOL available[TD_MAX_ENTITIES];
     unsigned int length;
     unsigned int active;
 };
@@ -78,37 +80,61 @@ typedef enum TD_ComponentType TD_ComponentType;
  * TD_Transform
  * All data relevant to world position and orientation.
  * 
- * float x: x-coordinate.
- * float y: y-coordinate.
- * float sx: Scale in x direction.
- * float sy: Scale in y direction.
+ * TD_Vector2D translate: World-coordinates.
+ * TD_Vector2D scale: Size.
  * float angle: Rotation on Z axis.
 */
 struct TD_Transform
 {
-    float x;
-    float y;
-    float sx;
-    float sy;
+    TD_Vector2D translate;
+    TD_Vector2D scale;
     float angle;
 };
 typedef struct TD_Transform Transform;
 
+
+/*
+ * TD_Rigidbody
+ * All data relevant for applied physics.
+ * 
+ * TD_Vector2D velocity: Speed of entity.
+ * TD_Vector2D accleration: Acceleration of entity.
+ * TD_Vector2D gravity: Gravity applied to entity.
+*/
 struct TD_Rigidbody
 {
-    //Uh figure it out later?
+    TD_Vector2D velocity;
+    TD_Vector2D acceleration;
+    TD_Vector2D gravity;
 };
 typedef struct TD_Rigidbody Rigidbody;
 
 struct TD_Sprite
 {
-    //I'll figure it out
+    char filename[256];
+    //Something else?
 };
 typedef struct TD_Sprite Sprite;
 
+/*
+ * TD_Collider
+ * All data relevant to collisions.
+ * 
+ * TD_Vector2D container: The dimensions of the collider.
+ * TD_Entity collidedMembers[]: A running list of all members collided in one frame.
+ * int collidedCount: The number of actual members.
+ * TD_BOOL isCircle: Is it a circle?
+ * TD_BOOL isTrigger: Is it only a trigger (no physical restrictions)?
+ * TD_BOOL hasCollided: Has it hit something?
+*/
 struct TD_Collider
 {
-    //Something goes here
+    TD_Vector2D container;
+    TD_Entity collidedMembers[TD_MAX_MEMBERS];
+    int collidedCount;
+    TD_BOOL isCircle;
+    TD_BOOL isTrigger;
+    TD_BOOL hasCollided;
 };
 typedef struct TD_Collider Collider;
 
@@ -137,7 +163,7 @@ typedef struct TD_Script Script;
 */
 struct TD_ScriptHolder
 {
-    Script scripts[MAX_SCRIPTS];
+    Script scripts[TD_MAX_SCRIPTS];
     int count;
 };
 typedef struct TD_ScriptHolder ScriptHolder;
@@ -154,11 +180,11 @@ typedef struct TD_ScriptHolder ScriptHolder;
 */
 struct TD_ComponentManager
 {
-    Transform    transforms[MAX_ENTITIES];
-    Rigidbody    rigidbodies[MAX_ENTITIES];
-    Sprite       sprites[MAX_ENTITIES];
-    Collider     colliders[MAX_ENTITIES];
-    ScriptHolder scripts[MAX_ENTITIES];
+    Transform    transforms[TD_MAX_ENTITIES];
+    Rigidbody    rigidbodies[TD_MAX_ENTITIES];
+    Sprite       sprites[TD_MAX_ENTITIES];
+    Collider     colliders[TD_MAX_ENTITIES];
+    ScriptHolder scripts[TD_MAX_ENTITIES];
 };
 typedef struct TD_ComponentManager ComponentManager;
 
@@ -167,6 +193,8 @@ extern ComponentManager componentManager;
 
 
 //----------SYSTEM----------//
+
+void TD_PhysicsSystem(float dt);
 
 
 
@@ -216,7 +244,9 @@ int TD_AddScript(TD_Entity e, Script s);
 
 
 //Changlog:
-//05-02-2021 - Added "TD_uint64" type where applicable.
+//02-05-2021 - Added "TD_uint64" type where applicable, updated 
+//             all structs, added TD_PhysicsSystem (WOEFULLY 
+//             UNFINISHED).
 //28-04-2021 - Collected ECS files into this file, added all of
 //             the functionality.
 //26-04-2021 - Initial version.

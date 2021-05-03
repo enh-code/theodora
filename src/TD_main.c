@@ -61,6 +61,8 @@ int testFunc(void)
         nk_glfw3_render(&theodora.glfwctx, NK_ANTI_ALIASING_OFF, TD_MAX_VERTEX_BUFFER, TD_MAX_ELEMENT_BUFFER);
         glfwSwapBuffers(theodora.window);
     }
+
+    return 0;
 }
 
 int main(void)

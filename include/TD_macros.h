@@ -20,11 +20,13 @@
 #define TD_WINDOW_HEIGHT 600
 
 //ECS Specifications
-#define MAX_ENTITIES 1024
-#define MAX_SCRIPTS 5
+#define TD_MAX_ENTITIES 1024
+#define TD_MAX_SCRIPTS 5
+#define TD_MAX_MEMBERS 10
 
 //Changelog
-//28-04-2021 - Added TD_ again, added MAX_SCRIPTS
+//02-05-2021 - Added TD_MAX_MEMBERS.
+//28-04-2021 - Added TD_ again, added MAX_SCRIPTS.
 //26-04-2021 - Added BOOL macro, added MAX_ENTITIES, removed include guards.
 //25-04-2021 - Changed "THEO_" to "TD_" for consistency, changed all filenames.
 //23-04-2021 - Renamed "constants.h" to "macros.h", swapped constants for
